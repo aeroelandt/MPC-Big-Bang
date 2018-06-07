@@ -58,7 +58,6 @@ namespace MPCProject2
             if (_canFinish)
             {
                 ImageMovementUserControl.ImageMovement.Remove();
-                ImageMovementUserControl.SoundNeeded = false;
                 var newCurrent = Int32.Parse(Application.Current.Properties["CurrentMovement"].ToString()) + 1;
                 Application.Current.Properties["CurrentMovement"] = newCurrent;
                 ImageMovementUserControl.AnimatingControl_Loaded();
