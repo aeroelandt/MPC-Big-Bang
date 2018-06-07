@@ -258,22 +258,22 @@
                             <DataTemplate>
                                 <materialDesign:Card Margin="4 4 0 0" Width="70" 
                                                      Visibility="{Binding ShowMe, Converter={StaticResource VisibilityConverter}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="60" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Image gif:ImageBehavior.AnimatedSource="{Binding SourceSmall}" />
-                                    <Grid HorizontalAlignment="Left" Grid.Row="1" Margin="8">
+                                    <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
+                                            <RowDefinition Height="60" />
+                                            <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
-                                            <ToggleButton Margin="8 0 0 0" IsChecked="{Binding Active}"></ToggleButton>
-                                        </StackPanel>
+                                        <Image gif:ImageBehavior.AnimatedSource="{Binding SourceSmall}" />
+                                        <Grid HorizontalAlignment="Left" Grid.Row="1" Margin="8">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                <ToggleButton Margin="8 0 0 0" IsChecked="{Binding Active}"></ToggleButton>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
                                 </materialDesign:Card>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

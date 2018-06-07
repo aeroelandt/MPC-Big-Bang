@@ -35,6 +35,8 @@ namespace MPCProject2
         private string _backgroundColor = Application.Current.Properties["BackgroundColor"].ToString();
 
 
+        #region Properties
+
         public string BackgroundColor
         {
             get { return _backgroundColor; }
@@ -232,9 +234,12 @@ namespace MPCProject2
             }
         }
 
+        #endregion
+
         public SettingsWindow()
         {
             InitializeComponent();
+            UpdateShowList();
         }
 
         public void UpdateShowList()
@@ -251,18 +256,22 @@ namespace MPCProject2
 
             if (ShowList.Count == 0)
             {
-                foreach (var image in AllImages)
+                foreach (var image in _allImages)
                 {
                     image.ShowMe = true;
                 }
             }
             else
             {
-                foreach (var image in AllImages)
+                foreach (var image in _allImages)
                 {
-                    image.ShowMe = ShowList.Any(a => image.Type.Contains(a));
+                    var show = ShowList.Any(a => image.Type.Contains(a));
+                    image.ShowMe = show;
+                    if(!show)
+                        image.Active = false;
                 }
             }
+            AllImages = _allImages;
         }
 
         private void ReturnToMain_Click(object sender, RoutedEventArgs e)
