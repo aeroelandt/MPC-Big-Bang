@@ -1,0 +1,18 @@
+﻿<Window x:Class="MPCProject2.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MPCProject2"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d"
+        Title="GameWindow"
+        Background="{Binding Source={x:Static Application.Current},Path=Properties[BackgroundColor]}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStyle="None" ResizeMode="NoResize"  
+        x:Name="gameWindow"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid x:Name="MainGameGrid">
+        <local:ImageMovementUserControl x:Name="ImageMovementUserControl"></local:ImageMovementUserControl>
+    </Grid>
+</Window>
