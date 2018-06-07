@@ -29,7 +29,6 @@ namespace MPCProject2
     {
         public Storyboard ImageMovement;
         public Window GameWindow;
-        public bool SoundNeeded = false;
         public readonly System.Timers.Timer InteractionTimer = new System.Timers.Timer();
         private readonly List<MovementObject> _allMovementObjects =
             (List<MovementObject>) Application.Current.Properties["AllMovements"];
@@ -276,11 +275,8 @@ namespace MPCProject2
                 Controller.Pause();
                 ImageToMove.Visibility = Visibility.Visible;
                 var t = int.Parse(Application.Current.Properties["InteractionTime"].ToString());
-                //var pause = Convert.ToInt32(Application.Current.Properties["Pause"].ToString()) * 1000;
-                InteractionTimer.Interval = t * 1000/* + pause*/;
+                InteractionTimer.Interval = t * 1000;
                 InteractionTimer.Start();
-                SoundNeeded = true;
-
             }
             else
             {
@@ -326,11 +322,9 @@ namespace MPCProject2
 
         private void Element_MediaEnded(object sender, EventArgs e)
         {
+            Controller.Pause();
             SoundToPlay.Stop();
-            if (SoundNeeded)
-            {
-                SoundToPlay.Play();
-            }
+            InteractionTimer.Start();
         }
 
         public void StartMovement()
