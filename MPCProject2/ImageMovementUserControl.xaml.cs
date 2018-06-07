@@ -30,6 +30,7 @@ namespace MPCProject2
         public Storyboard ImageMovement;
         public Window GameWindow;
         public readonly System.Timers.Timer InteractionTimer = new System.Timers.Timer();
+        public readonly System.Timers.Timer SoundTimer = new System.Timers.Timer();
         private readonly List<MovementObject> _allMovementObjects =
             (List<MovementObject>) Application.Current.Properties["AllMovements"];
         private readonly List<ImageObject> _allImages = 
@@ -38,6 +39,7 @@ namespace MPCProject2
         private ImageObject _currentImage;
         private readonly SoundType _sound = (SoundType)Application.Current.Properties["Sound"];
 
+        public bool SoundNeeded;
         public ImageAnimationController Controller = null;
 
         private readonly List<int> _positionList;
@@ -50,6 +52,7 @@ namespace MPCProject2
             _positionList = CreateRandomList();
             _positionImageList = CreateRandomImageList();
             InteractionTimer.Elapsed += interactionTimer_Elapsed;
+            SoundTimer.Elapsed += soundTimer_Elapsed;
             Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(AnimatingControl_Loaded));
 
         }
@@ -276,7 +279,9 @@ namespace MPCProject2
                 ImageToMove.Visibility = Visibility.Visible;
                 var t = int.Parse(Application.Current.Properties["InteractionTime"].ToString());
                 InteractionTimer.Interval = t * 1000;
+                SoundTimer.Interval = 5000;
                 InteractionTimer.Start();
+                SoundNeeded = false;
             }
             else
             {
@@ -315,16 +320,29 @@ namespace MPCProject2
                 {
                     SoundToPlay.Source = _currentImage.AttentionSound;
                     SoundToPlay.Play();
+                    SoundTimer.Start();
+                    SoundNeeded = true;
                 }
             });
             InteractionTimer.Stop();
         }
 
+        private void soundTimer_Elapsed(object source, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Controller.Pause();
+                SoundNeeded = false;
+                SoundToPlay.Stop();
+                InteractionTimer.Start();
+            });
+            SoundTimer.Stop();
+        }
+
         private void Element_MediaEnded(object sender, EventArgs e)
         {
-            Controller.Pause();
-            SoundToPlay.Stop();
-            InteractionTimer.Start();
+            if(SoundNeeded)
+                SoundToPlay.Play();
         }
 
         public void StartMovement()
